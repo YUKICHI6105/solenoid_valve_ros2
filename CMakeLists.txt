@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(solenoid_valve)
+project(solenoid_valve_ros2)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -14,17 +14,17 @@ find_package(sensor_msgs REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-add_executable(solenoid_valve src/solenoid_valve.cpp)
-ament_target_dependencies(solenoid_valve rclcpp can_plugins2 sensor_msgs)
+add_executable(solenoid_valve_ros2 src/solenoid_valve_ros2.cpp)
+ament_target_dependencies(solenoid_valve_ros2 rclcpp can_plugins2 sensor_msgs)
 
-target_compile_features(solenoid_valve PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_compile_features(solenoid_valve_ros2 PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
-target_include_directories(solenoid_valve PUBLIC
+target_include_directories(solenoid_valve_ros2 PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 install(TARGETS
-  solenoid_valve
+  solenoid_valve_ros2
   DESTINATION lib/${PROJECT_NAME}
 )
 

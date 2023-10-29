@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>solenoid_valve</name>
+  <name>solenoid_valve_ros2</name>
   <version>0.0.0</version>
-  <description>CRS solenoid_valve controller</description>
+  <description>CRS solenoid_valve_ros2 controller</description>
   <maintainer email="107849799+YUKICHI6105@users.noreply.github.com">yukichi6105</maintainer>
   <license>Apache License 2.0</license>
 

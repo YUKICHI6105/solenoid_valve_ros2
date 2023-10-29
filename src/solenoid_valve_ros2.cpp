@@ -3,7 +3,7 @@
 #include <sensor_msgs/msg/joy.hpp>
 #include <std_msgs/msg/bool.hpp>
 #include <can_utils.hpp>
-#include <solenoid_valve/solenoid_valve.hpp>
+#include <solenoid_valve_ros2/solenoid_valve_ros2.hpp>
 
 #include <chrono>
 #include <thread>
@@ -11,7 +11,7 @@
 using namespace std::chrono_literals;
 using std::placeholders::_1;
 
-class solenoid_valve : public rclcpp::Node
+class solenoid_valve_ros2 : public rclcpp::Node
 {
 private:
     void joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg);
@@ -22,17 +22,17 @@ private:
     int count = 0;
     Valve valveArray;//valveに関する配列
 public:
-    solenoid_valve(/* args */);
+    solenoid_valve_ros2(/* args */);
     void timer_callback();
     void toggle(uint32_t channel,const sensor_msgs::msg::Joy::SharedPtr msg);
     void normal(uint32_t channel,const sensor_msgs::msg::Joy::SharedPtr msg);
     void valvePublish(uint32_t status[7],uint32_t channel);
 };
 
-solenoid_valve::solenoid_valve(/* args */) : Node("solenoid_valve"), count_(0)
+solenoid_valve_ros2::solenoid_valve_ros2(/* args */) : Node("solenoid_valve_ros2"), count_(0)
 {       
     publisher_ = this->create_publisher<can_plugins2::msg::Frame>("can_tx", 10);
-    subscriber_ = this->create_subscription<sensor_msgs::msg::Joy>("joy", 10, std::bind(&solenoid_valve::joy_callback, this, _1));
+    subscriber_ = this->create_subscription<sensor_msgs::msg::Joy>("joy", 10, std::bind(&solenoid_valve_ros2::joy_callback, this, _1));
     this->declare_parameter("velButton", 2);
     this->declare_parameter("disButton", 1);
     //ツイスト型の調査
@@ -48,11 +48,11 @@ solenoid_valve::solenoid_valve(/* args */) : Node("solenoid_valve"), count_(0)
     std::vector<rclcpp::Parameter> valve_mode_parameters{rclcpp::Parameter("solenoidValveMode", valveArray.mode)};
     this->set_parameters(valve_mode_parameters);
 
-    timer_ = this->create_wall_timer(1000ms, std::bind(&solenoid_valve::timer_callback, this));
+    timer_ = this->create_wall_timer(1000ms, std::bind(&solenoid_valve_ros2::timer_callback, this));
     timer_callback();
 }
 
-void solenoid_valve::timer_callback(){
+void solenoid_valve_ros2::timer_callback(){
     for(int i=0; i<7; i++){
         valveArray.enable[i] = this->get_parameter("solenoidValveEnable").as_integer_array()[i];
         valveArray.button[i] = this->get_parameter("solenoidValveButton").as_integer_array()[i];
@@ -63,7 +63,7 @@ void solenoid_valve::timer_callback(){
     RCLCPP_INFO(this->get_logger(), "solenoidValveMode %s %s %s %s %s %s %s!", valveArray.mode[0].c_str(), valveArray.mode[1].c_str(), valveArray.mode[2].c_str(), valveArray.mode[3].c_str(), valveArray.mode[4].c_str(), valveArray.mode[5].c_str(), valveArray.mode[6].c_str());
 }
 
-void solenoid_valve::valvePublish(uint32_t status[7],uint32_t channel){
+void solenoid_valve_ros2::valvePublish(uint32_t status[7],uint32_t channel){
   if(status[channel]==1){
     uint32_t a = 1;
     a = a << (channel);
@@ -75,7 +75,7 @@ void solenoid_valve::valvePublish(uint32_t status[7],uint32_t channel){
   }
 }
 
-void solenoid_valve::toggle(uint32_t channel,const sensor_msgs::msg::Joy::SharedPtr msg){
+void solenoid_valve_ros2::toggle(uint32_t channel,const sensor_msgs::msg::Joy::SharedPtr msg){
   if(valveArray.mode[channel] == "Toggle"){
     if(msg->buttons[valveArray.button[channel]]==1){
       if(valveArray.preButton[channel]==0){
@@ -96,7 +96,7 @@ void solenoid_valve::toggle(uint32_t channel,const sensor_msgs::msg::Joy::Shared
   }
 }
 
-void solenoid_valve::normal(uint32_t channel,const sensor_msgs::msg::Joy::SharedPtr msg){
+void solenoid_valve_ros2::normal(uint32_t channel,const sensor_msgs::msg::Joy::SharedPtr msg){
   if(valveArray.mode[channel] == "Normal"){
     if(msg->buttons[valveArray.button[channel]]==1){
       if(valveArray.countvalve1[channel]==0){
@@ -116,7 +116,7 @@ void solenoid_valve::normal(uint32_t channel,const sensor_msgs::msg::Joy::Shared
   }
 }
 
-void solenoid_valve::joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg){
+void solenoid_valve_ros2::joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg){
   for(int i=0;i<7;i++){
     if(valveArray.enable[i]==1){
       toggle(i,msg);
@@ -137,7 +137,7 @@ void solenoid_valve::joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg){
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<solenoid_valve>());
+    rclcpp::spin(std::make_shared<solenoid_valve_ros2>());
     rclcpp::shutdown();
     return 0;
 }

@@ -1,4 +1,4 @@
-solenoid_valve:
+solenoid_valve_ros2:
   ros__parameters:
     velButton: 7
     disButton: 1
