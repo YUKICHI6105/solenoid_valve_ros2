@@ -1,0 +1,7 @@
+solenoid_valve:
+  ros__parameters:
+    velButton: 7
+    disButton: 1
+    solenoidValveEnable: [0,1,0,0,0,0,0] #[1番,2番,3番,4番,5番,6番,7番] 0 or 1
+    solenoidValveButton: [0,0,0,0,0,0,0] #[1番,2番,3番,4番,5番,6番,7番]
+    solenoidValveMode: ["Normal","Toggle","Toggle","Toggle","Toggle","Toggle","Toggle"]
