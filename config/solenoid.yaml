@@ -1,6 +1,6 @@
 solenoid_valve_ros2:
   ros__parameters:
-    velButton: 7
+    velButton: 6
     disButton: 1
     solenoidValveEnable: [1,1,1,0,0,0,0] #[1番,2番,3番,4番,5番,6番,7番] 0 or 1
     solenoidValveButton: [0,0,0,0,0,0,0] #[1番,2番,3番,4番,5番,6番,7番]
