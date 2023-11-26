@@ -21,7 +21,8 @@ target_compile_features(solenoid_valve_ros2 PUBLIC c_std_99 cxx_std_17)  # Requi
 
 target_include_directories(solenoid_valve_ros2 PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  $<INSTALL_INTERFACE:include>
+)
 
 install(TARGETS
   solenoid_valve_ros2
