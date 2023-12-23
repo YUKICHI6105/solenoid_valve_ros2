@@ -17,7 +17,7 @@ find_package(sensor_msgs REQUIRED)
 add_executable(solenoid_valve_ros2 src/solenoid_valve_ros2.cpp)
 ament_target_dependencies(solenoid_valve_ros2 rclcpp can_plugins2 sensor_msgs)
 
-target_compile_features(solenoid_valve_ros2 PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_compile_features(solenoid_valve_ros2 PUBLIC c_std_99 cxx_std_20)  # Require C99 and C++20
 
 target_include_directories(solenoid_valve_ros2 PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

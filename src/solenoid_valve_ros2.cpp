@@ -2,7 +2,7 @@
 #include <can_plugins2/msg/frame.hpp>
 #include <sensor_msgs/msg/joy.hpp>
 #include <std_msgs/msg/bool.hpp>
-#include <can_utils.hpp>
+#include <solenoid_valve_ros2/can_utils.hpp>
 #include <solenoid_valve_ros2/solenoid_valve_ros2.hpp>
 
 #include <chrono>
