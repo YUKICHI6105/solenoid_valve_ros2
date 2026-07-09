@@ -3,7 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "/opt/ros/humble/include/**",
+                "/opt/ros/lyrical/include/**",
                 "${workspaceFolder}/include/**",
                 "${workspaceFolder}/../../build/can_plugins2/rosidl_generator_cpp/**"
             ],

@@ -1,4 +1,10 @@
 #include <array>
+#include <algorithm>
+#include <bit>
+#include <cstdint>
+#include <cstring>
+#include <memory>
+#include <stdexcept>
 #include <can_plugins2/msg/frame.hpp>
 #define CAN_MTU 8
 

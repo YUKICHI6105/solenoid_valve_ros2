@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.20)
 project(solenoid_valve_ros2)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -10,12 +10,18 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(can_plugins2 REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
 add_executable(solenoid_valve_ros2 src/solenoid_valve_ros2.cpp)
-ament_target_dependencies(solenoid_valve_ros2 rclcpp can_plugins2 sensor_msgs)
+target_link_libraries(solenoid_valve_ros2
+  rclcpp::rclcpp
+  can_plugins2::can_plugins2
+  sensor_msgs::sensor_msgs
+  std_msgs::std_msgs
+)
 
 target_compile_features(solenoid_valve_ros2 PUBLIC c_std_99 cxx_std_20)  # Require C99 and C++20
 
